@@ -1,19 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList} from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import jwtDecode from 'jwt-decode';
 import api from '../services/api'
 
 export default class Consultas extends Component {
   constructor(props){
     super(props)
     this.state = {
-      listaConsultas : []
+      listaConsultas : [],
     }
   }
 
   buscarConsultas = async () => {
 
-    const valorToken = await AsyncStorage.getItem('teste')
+    const valorToken = await AsyncStorage.getItem('spmgToken')
 
     const resposta = await api.get('/Consulta/minhas', {
       headers : {
@@ -31,20 +32,17 @@ export default class Consultas extends Component {
 
   render(){
     return(
-      <View>
-          <View style={styles.main}>
-            <Text>{"Consultas".toUpperCase()}</Text>
+      <View style={styles.main}>
+          <View style={styles.content}>
+            <Text style={styles.consulta}>{"Minhas Consultas"}</Text>
           </View>
-
-        <View>
-          <FlatList 
-            contentContainerStyle={styles.mainBodyContent}
-            data={this.state.listaConsultas}
-            keyExtractor={item => (item.idConsulta).toString()}
-            renderItem={this.renderItem}
-          />
-        </View>
-
+          <View>
+              <FlatList 
+                data={this.state.listaConsultas}
+                keyExtractor={item => (item.idConsulta).toString()}
+                renderItem={this.renderItem}
+              />
+          </View>
       </View>
 
 
@@ -65,33 +63,15 @@ export default class Consultas extends Component {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: '#F2F2F2',
-    justifyContent: 'center',
+    backgroundColor: '#06418A',
     alignItems: 'center',
     marginTop: 10
   },
-  mainHeader: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  mainHeaderRow: {
-    flexDirection: 'row'
-  },
-  mainHeaderText: {
-    fontSize: 16,
-    letterSpacing: 5,
-    color: '#999',
-    fontFamily: 'Open Sans'
-  },
-  mainHeaderLine: {
-    width: 220,
-    paddingTop: 10,
-    borderBottomColor: '#999',
-    borderBottomWidth: 1
-  },
-  mainBody: {
-    flex: 4
+  content: {
+     flex: 0.1,
+    //  backgroundColor: 'red',
+     justifyContent: 'center',
+     marginTop: 30
   },
   mainBodyContent: {
     paddingTop: 30,
@@ -99,9 +79,24 @@ const styles = StyleSheet.create({
     paddingLeft: 50
   },
   flatItemRow: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    marginTop: 30,
+    margin: 10,
+    backgroundColor: '#f2f2f2',
+    borderRadius: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset:{
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    padding: 25
   },
+  consulta: {
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center'
+  }
 })
 

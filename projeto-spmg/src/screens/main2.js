@@ -8,20 +8,20 @@ import Agendamentos from './agendamentos'
 
 const bottomTab = createBottomTabNavigator()
 
-export default class Main extends Component{
+export default class Main2 extends Component{
   render(){
     return(
       <View style={styles.main}>
           <bottomTab.Navigator
-            // initialRouteName= 'Login'
-            tabBarOptions={{
+              tabBarOptions={{
               activeBackgroundColor : '#252759',
               inactiveBackgroundColor : '#6A73A6',
               activeTintColor : 'white',
-              inactiveTintColor : 'white',
+              inactiveTintColor : 'white',             
+              
             }}
           >
-            <bottomTab.Screen name="Consultas" component={Consultas}/>
+            <bottomTab.Screen name="Agendamentos" component={Agendamentos}/>
           </bottomTab.Navigator>
       </View>
     )
@@ -31,6 +31,6 @@ export default class Main extends Component{
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: '#F1F1F1'
-  }
+    backgroundColor: '#F1F1F1',
+  },
 })
